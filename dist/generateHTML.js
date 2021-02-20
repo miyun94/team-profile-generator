@@ -1,5 +1,6 @@
-const generatePage = (data) => {
-    return `
+function generatePage(allEmployees){
+    toAdd = [];
+    HTML = `
     <!DOCTYPE html> 
     <html lang="en"> 
     <head>
@@ -16,13 +17,11 @@ const generatePage = (data) => {
       <div class="card" style="width: 18rem;">
      <div class="card-header">
      
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item"></li>
-        <li class="list-group-item"></li>
-        <li class="list-group-item"></li>
-    </ul>
-    </div>
+    </div>`
+    for(i = 0; i < allEmployees.length; i++){
+        HTML += allEmployees[i].card
+    }
+    HTML += `</div>
       </main>
     </body>
 
@@ -30,4 +29,7 @@ const generatePage = (data) => {
 
     </html> 
     `;
+    return HTML
 };
+
+module.exports = generatePage(); 

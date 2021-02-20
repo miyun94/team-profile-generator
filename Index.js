@@ -1,9 +1,12 @@
 const fs = require('fs')
 const inquirer = require('inquirer')
-const Choice = require('inquirer/lib/objects/choice')
-const { type } = require('os')
-const generateHtml = require('./dist/generateHTML')
+//const generateHtml = require('./dist/generateHTML')
+const Manager = require('./lib/Manager')
+const Engineer = require('./lib/Engineer')
+const Intern = require('./lib/Intern')
 
+
+let allEmployees = []
 
 //Create prompts for each employee
 function addManager() {
@@ -15,7 +18,7 @@ function addManager() {
         },
         {
             type:'input',
-            name:'managedid',
+            name:'managerid',
             message:'What is the ID number of the manager?'
         }, 
         {
@@ -28,7 +31,12 @@ function addManager() {
             name:'officenumber',
             message:'What is the phone number of the office?'
         }
-    ])
+    ]).then(response => {
+        let newManager = new Manager(response.managername, response.managerid, response.manageremail, response.officenumber)
+        allEmployees.push(newManager)
+        console.log(allEmployees)
+        addEmployee()
+    })
 }
 
 //Asks if they want to add Engineer or Intenr 
@@ -36,9 +44,21 @@ function addEmployee(){
     inquirer.prompt([
         {type:'list',
         name:'addemployee',
+        message:'Do you want to add another employee?',
         choices:["Add Engineer", "Add Intern", "Done: No more employees to add"]
     }
-    ])
+    ]).then(response => {
+        if(response.addemployee == "Add Engineer") {
+            addEngineer(); 
+        } else if(response.addemployee == "Add Intern") {
+            addIntern(); 
+        } else if (response.addemployee == "Done: No more employees to add") {
+            HTML = generatePage(allEmployees); 
+            writeToFile("./profiles.html", HTML);
+            console.log('wrote to file')
+            process.exit()
+        }
+    })
 }
 
 //Questions for Engineers 
@@ -64,8 +84,14 @@ function addEngineer(){
             name:'github',
             message:'What is the github username of the engineer?'
         }
-    ])
+    ]).then(response => {
+        let newEngineer = new Engineer(response.engineername, response.engineerid, response.engineeremail, response.github)
+        allEmployees.push(newEngineer)
+        console.log(allEmployees)
+        addEmployee()
+    })
 }
+
 
 //Questions prompts for Intern 
 function addIntern() {
@@ -90,17 +116,50 @@ function addIntern() {
             name:'school',
             message:'What is the name of the school the intern attends?'
         }
-    ])
+    ]).then(response => {
+        let newIntern = new Intern(response.internname, response.internid, response.internemail, response.school)
+        allEmployees.push(newIntern)
+        console.log(allEmployees)
+        addEmployee()
+    })
 }
 
-
-
-
-function init() {
-    function addManager().then(function(data)){
-        const generateHTML = 
-        writeToFile()
+function generatePage(allEmployees){
+    HTML = `
+    <!DOCTYPE html> 
+    <html lang="en"> 
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Team Portfolio</title>
+    </head>
+  
+    <body>
+      <h1></h1>
+      <main>
+      <div class="card" style="width: 18rem;">
+     <div class="card-header">
+     
+    </div>`
+    for(i = 0; i < allEmployees.length; i++){
+        HTML += allEmployees[i].card
     }
+    HTML += `</div>
+      </main>
+    </body>
+
+    </html> 
+    `;
+    return HTML
+};
+function writeToFile(fileName, data) {
+    fs.writeFileSync(fileName, data, err => {
+        if(err) {
+            console.log(err)
+        } else {console.log('Wrote to file')}        
+    })
 }
 
-//use dom elements to append information to cards in html???
+console.log("Please add one manager")
+addManager();
