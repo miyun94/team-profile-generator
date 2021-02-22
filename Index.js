@@ -1,6 +1,5 @@
 const fs = require('fs')
 const inquirer = require('inquirer')
-//const generateHtml = require('./dist/generateHTML')
 const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
@@ -34,7 +33,6 @@ function addManager() {
     ]).then(response => {
         let newManager = new Manager(response.managername, response.managerid, response.manageremail, response.officenumber)
         allEmployees.push(newManager)
-        console.log(allEmployees)
         addEmployee()
     })
 }
@@ -87,7 +85,6 @@ function addEngineer(){
     ]).then(response => {
         let newEngineer = new Engineer(response.engineername, response.engineerid, response.engineeremail, response.github)
         allEmployees.push(newEngineer)
-        console.log(allEmployees)
         addEmployee()
     })
 }
@@ -119,7 +116,6 @@ function addIntern() {
     ]).then(response => {
         let newIntern = new Intern(response.internname, response.internid, response.internemail, response.school)
         allEmployees.push(newIntern)
-        console.log(allEmployees)
         addEmployee()
     })
 }
@@ -133,11 +129,12 @@ function generatePage(allEmployees){
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+      <link rel="stylesheet" href="./dist/stylesheet.css">
       <title>Team Portfolio</title>
     </head>
   
     <body>
-      <h1></h1>
+      <h1>The Team</h1>
       <main>
       <div class = "card-deck">
     `
