@@ -52,7 +52,7 @@ function addEmployee(){
             addIntern(); 
         } else if (response.addemployee == "Done: No more employees to add") {
             HTML = generatePage(allEmployees); 
-            writeToFile("./profiles.html", HTML);
+            writeToFile("./index.html", HTML);
             console.log('wrote to file')
             process.exit()
         }
