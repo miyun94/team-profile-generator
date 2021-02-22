@@ -33,3 +33,45 @@ function generatePage(allEmployees){
 };
 
 module.exports = generatePage(); 
+
+
+<body>
+  <h1></h1>
+  <main>
+    <div class="row">
+      <div class="column">
+        <div class="card">
+          <div class="container">
+            <div>Manager</div>
+            <div>Peter</div>
+            <div>394068340</div>
+            <div>alsdkjfa@lskdfal.com</div>
+            <div>384-493-9340</div>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card">
+          <div class="container">
+            <div>Engineer</div>
+            <div>Asldkfa</div>
+            <div>23456</div>
+            <div>dlafwie@gd.com</div>
+            <div>dlaw83</div>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card">
+          <div class="container">
+            <div>Intern</div>
+            <div>Intern</div>
+            <div>290523</div>
+            <div>lkdfajlw@g.com</div>
+            <div>UCLA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
